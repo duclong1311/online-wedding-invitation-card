@@ -1,0 +1,10 @@
+# Ảnh/nhạc gốc dung lượng lớn (không đưa lên GitHub)
+src-wedding-image/
+src-wedding-music/
+
+# Windows / editor
+desktop.ini
+Thumbs.db
+.DS_Store
+.vscode/
+.idea/

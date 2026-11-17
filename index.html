@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Wedding Invitation | Đức Long &amp; Nguyễn Phương</title>
+  <meta name="description" content="Thiệp mời cưới online Trần Đức Long & Nguyễn Thị Phương — 28.11.2026." />
+
+  <!-- Google Fonts: Playfair Display (100% Tiếng Việt), Cormorant Garamond, Be Vietnam Pro & Bodoni Moda -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600&family=Bodoni+Moda:opsz,wght@6..96,700;6..96,800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Hạt nắng & lá Botanical bay nhẹ trên toàn bộ nền xanh -->
+  <canvas id="ambient-canvas" aria-hidden="true"></canvas>
+
+  <!-- Nhạc nền thiệp cưới: Young and Beautiful (từ 2:28 "Dear Lord..." đến hết, chỉ chạy 1 lần, không loop, không icon) -->
+  <audio
+    id="wedding-audio"
+    src="assets/music/young-and-beautiful.m4a"
+    preload="auto"
+    playsinline
+    aria-hidden="true"
+  ></audio>
+
+  <main class="magazine-book">
+
+    <!-- ======================================================================
+         PAGE 1: TRANG BÌA TẠP CHÍ (ASYMMETRIC EDITORIAL & TEXT BEHIND SUBJECT)
+         ====================================================================== -->
+    <section class="mag-page page-cover" id="page-1" aria-label="Trang bìa thiệp cưới Đức Long & Nguyễn Phương">
+      <div class="cover-stage">
+
+        <!-- LỚP 1 (z-index: 1): Ảnh nền gốc -->
+        <div class="cover-layer-bg">
+          <picture>
+            <source media="(min-width: 900px)" srcset="assets/images/hero/hero_pc_bg.webp" type="image/webp" />
+            <source media="(min-width: 900px)" srcset="assets/images/hero/hero_pc_bg.jpg" type="image/jpeg" />
+            <source srcset="assets/images/hero/hero_mobile_bg.webp" type="image/webp" />
+            <img
+              id="hero-bg-img"
+              src="assets/images/hero/hero_mobile_bg.jpg"
+              alt="Đức Long & Nguyễn Phương — The Wedding Invitation"
+              fetchpriority="high"
+            />
+          </picture>
+          <div class="cover-vignette"></div>
+        </div>
+
+        <!-- LỚP 2 (z-index: 2): CHỮ EDITORIAL BẤT ĐỐI XỨNG NẰM PHÍA SAU CHỦ THỂ (TEXT BEHIND SUBJECT) -->
+        <div class="cover-layer-behind" aria-hidden="true">
+          <div class="mag-top-bar">
+            <span id="hero-topbar-left">TRÂN TRỌNG KÍNH MỜI</span>
+            <span class="mag-top-line"></span>
+            <span id="hero-topbar-right">LỄ THÀNH HÔN</span>
+          </div>
+
+          <div class="staggered-masthead">
+            <div class="masthead-row-kicker">
+              <span class="editorial-the" id="hero-top-kicker">THE</span>
+              <span class="kicker-rule"></span>
+            </div>
+            <div class="masthead-row-main" id="hero-behind-masthead">WEDDING</div>
+            <div class="masthead-row-sub">
+              <span class="sub-line-deco"></span>
+              <span class="outline-invitation" id="hero-behind-sub">INVITATION</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- LỚP 3 (z-index: 3): CHỦ THỂ CÔ DÂU CHÚ RỂ TÁCH NỀN ĐÈ LÊN TRÊN CHỮ -->
+        <div class="cover-layer-fg" aria-hidden="true">
+          <picture>
+            <source media="(min-width: 900px)" srcset="assets/images/hero/hero_pc_fg.webp" type="image/webp" />
+            <img
+              id="hero-fg-img"
+              src="assets/images/hero/hero_mobile_fg.webp"
+              alt=""
+              fetchpriority="high"
+            />
+          </picture>
+          <div class="cover-bottom-shade"></div>
+        </div>
+
+        <!-- LỚP 4 (z-index: 4): QUOTE HAI BÊN HÔNG & CHÂN BÌA BẤT ĐỐI XỨNG -->
+        <div class="cover-layer-front">
+          <div class="cover-editorial-quotes">
+            <aside class="cover-quote-box cover-quote-box--left">
+              <span class="quote-kicker" id="hero-left-kicker">OUR STORY</span>
+              <p class="quote-en-lead" id="hero-left-quote">
+                “Two souls, one quiet forest, and a lifetime of mornings together.”
+              </p>
+            </aside>
+
+            <aside class="cover-quote-box cover-quote-box--right">
+              <span class="quote-rule-accent"></span>
+              <p class="quote-en-italic" id="hero-right-quote-en">
+                “In all the world, there is no heart for me like yours.”
+              </p>
+              <p class="quote-vi-body" id="hero-right-quote-vi">
+                Giữa vạn dặm nhân gian, cảm ơn vì đã tìm thấy nhau và cùng viết nên chương đẹp nhất của cuộc đời.
+              </p>
+            </aside>
+          </div>
+
+          <div class="cover-asymmetric-footer">
+            <div class="cover-couple-lockup">
+              <span class="lockup-label" id="hero-bottom-label">THE WEDDING OF</span>
+              <h1 class="lockup-names-clean">
+                <strong id="hero-groom-display">Đức Long</strong>
+                <em class="amp">&amp;</em>
+                <em id="hero-bride-display">Nguyễn Phương</em>
+              </h1>
+            </div>
+
+            <div class="cover-date-stamp">
+              <span class="stamp-big-day" id="hero-day-big">28</span>
+              <div class="stamp-meta">
+                <span class="stamp-line-1" id="hero-month-year">NOV — 2026</span>
+                <span class="stamp-line-2" id="hero-city-label">HÀ NỘI</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PAGE 2: GIA ĐÌNH HAI BÊN & LỄ THÀNH HÔN (BOTANICAL EDITORIAL SPREAD)
+         ====================================================================== -->
+    <section class="mag-page page-editorial-spread page-union" id="page-2" aria-label="Gia đình hai bên và Lễ Thành Hôn">
+      <div class="spread-watermark" aria-hidden="true">28</div>
+
+      <div class="spread-container reveal-on-scroll">
+        <!-- Header đầu Page 2: Đã bỏ lặp tên Đức Long & Nguyễn Phương -->
+        <header class="spread-RunningHeader spread-RunningHeader--centered">
+          <span class="header-rule"></span>
+          <span>LỄ THÀNH HÔN &amp; GIA ĐÌNH HAI BÊN</span>
+          <span class="header-rule"></span>
+        </header>
+
+        <div class="spread-asymmetric-grid">
+          <div class="spread-col-lead">
+            <span class="editorial-tag">THE MARRIAGE CEREMONY</span>
+            <h2 class="spread-display-title">
+              Khởi Đầu<br /><em>Một Mái Nhà</em>
+            </h2>
+            <p class="spread-lead-quote" id="announcement-text">
+              Sau hành trình yêu thương và đồng hành, chúng mình hạnh phúc báo tin ngày về chung một nhà
+            </p>
+
+            <!-- Họ tên đầy đủ Trần Đức Long & Nguyễn Thị Phương (Đã bỏ Trưởng Nam / Ái Nữ) -->
+            <div class="editorial-couple-feature">
+              <div class="feature-person">
+                <span class="feature-role" id="groom-order">CHÚ RỂ</span>
+                <h3 class="feature-fullname" id="groom-fullname">Trần Đức Long</h3>
+              </div>
+              <div class="feature-connector">&amp;</div>
+              <div class="feature-person feature-person--indented">
+                <span class="feature-role" id="bride-order">CÔ DÂU</span>
+                <h3 class="feature-fullname" id="bride-fullname">Nguyễn Thị Phương</h3>
+              </div>
+            </div>
+          </div>
+
+          <div class="spread-col-details">
+            <div class="editorial-families-stack">
+              <div class="editorial-family-box">
+                <div class="family-box-head">
+                  <span class="family-side-title">GIA ĐÌNH NHÀ TRAI</span>
+                </div>
+                <p class="family-parent" id="groom-father">Ông Trần Xuân Hải</p>
+                <p class="family-parent" id="groom-mother">Bà Bùi Thị Thủy</p>
+                <p class="family-addr" id="groom-address">Xã Đan Phượng, Hà Nội</p>
+              </div>
+
+              <div class="editorial-family-box">
+                <div class="family-box-head">
+                  <span class="family-side-title">GIA ĐÌNH NHÀ GÁI</span>
+                </div>
+                <p class="family-parent" id="bride-father">Ông Nguyễn Hữu Chiến</p>
+                <p class="family-parent" id="bride-mother">Bà Trần Thị Tuyết</p>
+                <p class="family-addr" id="bride-address">Xã Lê Lợi, Hưng Yên</p>
+              </div>
+            </div>
+
+            <div class="editorial-ceremony-bar">
+              <span class="ceremony-bar-label">NGÀY CHUNG ĐÔI</span>
+              <p class="ceremony-bar-time" id="ceremony-time-note">
+                Lễ Thành Hôn sẽ được cử hành vào lúc 9:30 ngày 28 tháng 11 năm 2026
+              </p>
+              <p class="ceremony-bar-lunar" id="ceremony-lunar-note">
+                Tức ngày 20 tháng 10 năm Bính Ngọ
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PAGE 3: BỮA CƠM THÂN MẬT (27.11.2026 — 17:30 TẠI TƯ GIA NHÀ TRAI)
+         ====================================================================== -->
+    <section class="mag-page page-editorial-spread page-reception" id="page-3" aria-label="Thời gian và Địa điểm Bữa cơm thân mật">
+      <div class="spread-watermark spread-watermark--left" aria-hidden="true">27</div>
+
+      <div class="spread-container reveal-on-scroll">
+        <header class="spread-RunningHeader">
+          <span id="event-header-left">BỮA CƠM THÂN MẬT</span>
+          <span class="header-rule"></span>
+          <span id="event-header-right">27 . 11 . 2026 — HÀ NỘI</span>
+        </header>
+
+        <div class="reception-editorial-layout">
+          <div class="reception-date-monument">
+            <span class="editorial-tag">SAVE THE DATE &amp; TIME</span>
+            <div class="monument-numbers">
+              <span class="monument-day" id="event-day-num">27</span>
+              <span class="monument-slash">/</span>
+              <span class="monument-month" id="event-month-num">11</span>
+            </div>
+            <div class="monument-sub">
+              <strong id="event-day-of-week">THỨ SÁU — VÀO HỒI 17:30</strong>
+              <span id="event-lunar">Tức ngày 19 tháng 10 năm Bính Ngọ</span>
+            </div>
+            <div class="monument-timeline" id="event-reception-detail">
+              Đón khách: 16:30 &nbsp;•&nbsp; Khai tiệc: 17:30
+            </div>
+          </div>
+
+          <div class="reception-venue-editorial">
+            <span class="editorial-tag">INTIMATE DINNER &amp; VENUE</span>
+            <h2 class="reception-title">
+              <span id="invitation-heading">Trân Trọng</span><br />
+              <em id="invitation-heading-em">Kính Mời</em>
+            </h2>
+            <p class="reception-desc" id="invitation-subtext">
+              Tới dự bữa cơm thân mật chung vui cùng gia đình và chúng mình tại:
+            </p>
+
+            <div class="venue-editorial-card">
+              <span class="venue-card-label">ĐỊA ĐIỂM TỔ CHỨC</span>
+              <h3 class="venue-card-name" id="event-venue-name">Tư Gia Nhà Trai</h3>
+              <p class="venue-card-address" id="event-venue-address">
+                Số 68, Phùng Hưng, Đan Phượng, Hà Nội
+              </p>
+              <a
+                id="event-map-link"
+                href="https://www.google.com/maps/search/?api=1&query=155+Ph%C3%B9ng+H%C6%B0ng,+%C4%90an+Ph%C6%B0%E1%BB%A3ng,+H%C3%A0+N%E1%BB%99i,+Vi%E1%BB%87t+Nam+(t%E1%BA%A1p+ho%C3%A1+Ph%C6%B0%C6%A1ng+L%C3%A2n)"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="editorial-map-link"
+              >
+                <span>XEM BẢN ĐỒ CHỈ ĐƯỜNG</span>
+                <span class="arrow">→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PAGE 4: LƯU BÚT — CÁNH BƯỚM NGHỆ THUẬT ĐẬU TRÊN BẢNG GỖ CỔ ĐIỂN
+         ====================================================================== -->
+    <section class="mag-page page-editorial-spread page-wishes" id="page-wishes" aria-label="Lưu bút">
+      <div class="spread-container wishes-showcase-container reveal-on-scroll">
+        <!-- Header tối giản: Chỉ giữ đúng chữ "LƯU BÚT" căn giữa -->
+        <header class="spread-RunningHeader spread-RunningHeader--centered">
+          <span class="header-rule"></span>
+          <span id="wishes-header-title">LƯU BÚT</span>
+          <span class="header-rule"></span>
+        </header>
+
+        <!-- Thanh trạng thái đưa phần hiển thị cánh bướm đã đậu lên trước & nút nhỏ mở Dialog -->
+        <div class="wishes-showcase-topbar">
+          <div class="board-status-pill">
+            <span class="status-wing-dot" aria-hidden="true"></span>
+            <span><strong id="wish-total-count">8</strong> CÁNH BƯỚM ĐÃ ĐẬU</span>
+          </div>
+
+          <div class="board-actions">
+            <button type="button" class="board-action-btn board-action-btn--ghost" id="btn-open-all-wishes">
+              <span>Xem danh sách</span>
+            </button>
+            <button type="button" class="board-action-btn board-action-btn--primary" id="btn-open-compose-wish">
+              <span aria-hidden="true">✦</span>
+              <span>Để lại lưu bút</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tấm Bảng Gỗ Óc Chó Nghệ Thuật (Artisanal Walnut & Brass Filigree Board) -->
+        <div class="wooden-wish-board" id="wooden-wish-board">
+          <!-- Hoa văn Khắc Đồng & Nhánh Lá Botanical Nghệ Thuật 4 Góc (SVG Filigree) -->
+          <svg class="wood-art-filigree" viewBox="0 0 1200 620" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="brass-filigree-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f7e3b5" stop-opacity="0.7" />
+                <stop offset="50%" stop-color="#d4ad6a" stop-opacity="0.42" />
+                <stop offset="100%" stop-color="#8c6229" stop-opacity="0.65" />
+              </linearGradient>
+              <radialGradient id="wood-sun-glow" cx="50%" cy="46%" r="54%">
+                <stop offset="0%" stop-color="#f5d08c" stop-opacity="0.14" />
+                <stop offset="60%" stop-color="#c48f45" stop-opacity="0.04" />
+                <stop offset="100%" stop-color="#000000" stop-opacity="0" />
+              </radialGradient>
+            </defs>
+
+            <!-- Ánh nắng rừng dịu chiếu lên tâm mặt gỗ -->
+            <rect x="0" y="0" width="1200" height="620" fill="url(#wood-sun-glow)" />
+
+            <!-- Khung viền chỉ đồng kép cẩn vào thớ gỗ -->
+            <rect x="18" y="18" width="1164" height="584" rx="4" fill="none" stroke="url(#brass-filigree-grad)" stroke-width="1.2" />
+            <rect x="26" y="26" width="1148" height="568" rx="2" fill="none" stroke="url(#brass-filigree-grad)" stroke-width="0.6" stroke-dasharray="6 4" opacity="0.75" />
+
+            <!-- Hoa văn dây leo & lá Botanical khắc chìm ở 4 góc bảng gỗ -->
+            <!-- Góc Trên Trái -->
+            <g stroke="url(#brass-filigree-grad)" fill="none" stroke-width="1.25" opacity="0.85">
+              <path d="M18,78 C18,38 38,18 78,18" />
+              <path d="M26,110 C32,58 58,32 110,26" stroke-width="0.9" />
+              <path d="M36,36 C56,52 78,54 104,42 C82,66 56,64 36,36 Z" fill="#dfc092" fill-opacity="0.12" />
+              <path d="M42,68 C58,82 74,84 92,74" stroke-width="0.8" />
+              <path d="M68,42 C82,58 84,74 74,92" stroke-width="0.8" />
+              <circle cx="34" cy="34" r="3.5" fill="#e6c793" />
+            </g>
+
+            <!-- Góc Trên Phải -->
+            <g transform="translate(1200, 0) scale(-1, 1)" stroke="url(#brass-filigree-grad)" fill="none" stroke-width="1.25" opacity="0.85">
+              <path d="M18,78 C18,38 38,18 78,18" />
+              <path d="M26,110 C32,58 58,32 110,26" stroke-width="0.9" />
+              <path d="M36,36 C56,52 78,54 104,42 C82,66 56,64 36,36 Z" fill="#dfc092" fill-opacity="0.12" />
+              <path d="M42,68 C58,82 74,84 92,74" stroke-width="0.8" />
+              <path d="M68,42 C82,58 84,74 74,92" stroke-width="0.8" />
+              <circle cx="34" cy="34" r="3.5" fill="#e6c793" />
+            </g>
+
+            <!-- Góc Dưới Trái -->
+            <g transform="translate(0, 620) scale(1, -1)" stroke="url(#brass-filigree-grad)" fill="none" stroke-width="1.25" opacity="0.85">
+              <path d="M18,78 C18,38 38,18 78,18" />
+              <path d="M26,110 C32,58 58,32 110,26" stroke-width="0.9" />
+              <path d="M36,36 C56,52 78,54 104,42 C82,66 56,64 36,36 Z" fill="#dfc092" fill-opacity="0.12" />
+              <path d="M42,68 C58,82 74,84 92,74" stroke-width="0.8" />
+              <path d="M68,42 C82,58 84,74 74,92" stroke-width="0.8" />
+              <circle cx="34" cy="34" r="3.5" fill="#e6c793" />
+            </g>
+
+            <!-- Góc Dưới Phải -->
+            <g transform="translate(1200, 620) scale(-1, -1)" stroke="url(#brass-filigree-grad)" fill="none" stroke-width="1.25" opacity="0.85">
+              <path d="M18,78 C18,38 38,18 78,18" />
+              <path d="M26,110 C32,58 58,32 110,26" stroke-width="0.9" />
+              <path d="M36,36 C56,52 78,54 104,42 C82,66 56,64 36,36 Z" fill="#dfc092" fill-opacity="0.12" />
+              <path d="M42,68 C58,82 74,84 92,74" stroke-width="0.8" />
+              <path d="M68,42 C82,58 84,74 74,92" stroke-width="0.8" />
+              <circle cx="34" cy="34" r="3.5" fill="#e6c793" />
+            </g>
+
+            <!-- Họa tiết la bàn hoa thị chìm nhẹ ở chính giữa mặt gỗ -->
+            <g transform="translate(600, 310)" stroke="url(#brass-filigree-grad)" fill="none" opacity="0.14">
+              <circle cx="0" cy="0" r="145" stroke-width="0.8" stroke-dasharray="3 6" />
+              <circle cx="0" cy="0" r="96" stroke-width="0.6" />
+              <path d="M-170,0 L170,0 M0,-170 L0,170" stroke-width="0.5" />
+              <path d="M0,-26 C6,-6 6,6 0,26 C-6,6 -6,-6 0,-26 Z" fill="#dfc092" fill-opacity="0.2" />
+              <path d="M-26,0 C-6,6 6,6 26,0 C6,-6 -6,-6 -26,0 Z" fill="#dfc092" fill-opacity="0.2" />
+            </g>
+          </svg>
+
+          <!-- Bóng lá rừng đổ nhẹ trên mặt gỗ -->
+          <div class="wood-dappled-foliage" aria-hidden="true"></div>
+
+          <!-- Sân khấu nơi những chú bướm 3D nghệ thuật bay vào và đậu trên mặt gỗ -->
+          <div class="butterfly-stage" id="butterfly-stage" aria-live="polite"></div>
+
+          <!-- Thẻ Lưu Bút Giấy Mỹ Thuật (Artisanal Herbarium Card) hiện ra khi hover / chạm vào chú bướm -->
+          <aside class="wish-floating-card" id="wish-floating-card" aria-hidden="true">
+            <button type="button" class="wish-card-close" id="wish-card-close" aria-label="Đóng lưu bút">×</button>
+            <div class="wish-card-header">
+              <span class="wish-card-emblem" id="wish-card-emblem">✦</span>
+              <div class="wish-card-meta">
+                <strong class="wish-card-sender" id="wish-card-sender">Minh Anh</strong>
+                <span class="wish-card-time" id="wish-card-time">Hôm nay</span>
+              </div>
+            </div>
+            <p class="wish-card-body" id="wish-card-body">
+              “Chúc hai bạn trăm năm hạnh phúc!”
+            </p>
+          </aside>
+        </div>
+      </div>
+
+      <!-- DIALOG NHẬP LƯU BÚT (Khi đóng Dialog sau khi gửi sẽ có 1 chú bướm màu ngẫu nhiên bay vào đậu lên bảng gỗ) -->
+      <div class="wishes-modal-backdrop" id="wish-compose-backdrop" hidden>
+        <div class="wishes-modal-dialog wishes-compose-dialog" role="dialog" aria-modal="true" aria-labelledby="wish-compose-title">
+          <header class="wishes-modal-header">
+            <div>
+              <span class="editorial-tag">LEAVE A NOTE</span>
+              <h3 class="wishes-modal-title" id="wish-compose-title">Để Lại Lưu Bút</h3>
+            </div>
+            <button type="button" class="wishes-modal-close" id="btn-close-compose-wish" aria-label="Đóng hộp thoại">×</button>
+          </header>
+
+          <form class="wish-compose-form" id="butterfly-wish-form" autocomplete="off">
+            <div class="wish-field">
+              <label class="wish-label" for="wish-sender-name">TÊN CỦA BẠN / GIA ĐÌNH</label>
+              <input
+                type="text"
+                id="wish-sender-name"
+                class="wish-input"
+                placeholder="VD: Minh Anh (Bạn đại học)..."
+                maxlength="55"
+                required
+              />
+            </div>
+
+            <div class="wish-field">
+              <div class="wish-label-row">
+                <label class="wish-label" for="wish-message-input">LỜI NHẮN</label>
+                <span class="wish-char-count" id="wish-char-count">0 / 220</span>
+              </div>
+              <textarea
+                id="wish-message-input"
+                class="wish-textarea"
+                rows="4"
+                maxlength="220"
+                placeholder="Viết đôi dòng lưu bút gửi tới Đức Long &amp; Nguyễn Phương..."
+                required
+              ></textarea>
+
+              <div class="wish-quick-chips" aria-label="Gợi ý nhanh">
+                <button type="button" class="wish-chip" data-wish="Chúc Đức Long &amp; Nguyễn Phương trăm năm hạnh phúc, trọn đời bình yên bên nhau!">
+                  + Trăm năm hạnh phúc
+                </button>
+                <button type="button" class="wish-chip" data-wish="Chúc hai bạn mãi giữ lửa yêu thương ngọt ngào như ngày đầu và sớm đón thiên thần nhỏ!">
+                  + Sớm đón thiên thần nhỏ
+                </button>
+                <button type="button" class="wish-chip" data-wish="Trăm năm tình viên mãn, bạc đầu nghĩa phu thê. Happy Wedding!">
+                  + Tình viên mãn
+                </button>
+              </div>
+            </div>
+
+            <div class="wish-compose-actions">
+              <button type="submit" class="wish-submit-btn" id="wish-submit-btn">
+                <span aria-hidden="true">✦</span>
+                <span>HOÀN TẤT &amp; THẢ CÁNH BƯỚM</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- DIALOG XEM DANH SÁCH TOÀN BỘ LƯU BÚT -->
+      <div class="wishes-modal-backdrop" id="wishes-modal-backdrop" hidden>
+        <div class="wishes-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="wishes-modal-title">
+          <header class="wishes-modal-header">
+            <div>
+              <span class="editorial-tag">GUESTBOOK ARCHIVE</span>
+              <h3 class="wishes-modal-title" id="wishes-modal-title">Toàn Bộ Lưu Bút</h3>
+            </div>
+            <button type="button" class="wishes-modal-close" id="btn-close-all-wishes" aria-label="Đóng sổ lưu bút">×</button>
+          </header>
+          <div class="wishes-modal-list" id="wishes-modal-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PAGE 5: TRANG KẾT — ẢNH QA_06511 NỀN ĐEN TRẮNG (MONOCHROME)
+         ====================================================================== -->
+    <section class="mag-page page-finale-bw" id="page-4" aria-label="Lời cảm ơn">
+      <div class="finale-bw-stage">
+        <div class="finale-bw-photo-wrap">
+          <picture>
+            <source srcset="assets/images/full/QA_06511.webp" type="image/webp" />
+            <img
+              id="finale-bw-img"
+              src="assets/images/full/QA_06511.jpg"
+              alt="Trần Đức Long & Nguyễn Thị Phương — QA_06511 Monochrome"
+              loading="lazy"
+            />
+          </picture>
+          <div class="finale-bw-overlay"></div>
+        </div>
+
+        <!-- Đầu Page 4: Chỉ giữ "TRỌN VẸN YÊU THƯƠNG" căn giữa kèm 2 đoạn gạch ở 2 đầu -->
+        <header class="finale-top-bar finale-top-bar--centered">
+          <span class="finale-side-line"></span>
+          <span id="finale-top-title">TRỌN VẸN YÊU THƯƠNG</span>
+          <span class="finale-side-line"></span>
+        </header>
+
+        <div class="finale-editorial-footer reveal-on-scroll">
+          <div class="finale-left-title">
+            <span class="finale-kicker">FOREVER BEGINS TODAY</span>
+            <h2 class="finale-giant-thank" id="finale-heading">THANK <em>You.</em></h2>
+          </div>
+          <div class="finale-right-colophon">
+            <p class="finale-message" id="finale-message">
+              Sự hiện diện của Quý khách là niềm vinh hạnh lớn lao trong ngày hạnh phúc của chúng mình.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="config.js"></script>
+  <script src="butterfly.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
