@@ -44,7 +44,13 @@ window.WEDDING_CONFIG = {
       roleLabel: "CÔ DÂU",
       father: "Ông Nguyễn Hữu Chiến",
       mother: "Bà Trần Thị Tuyết",
-      address: "Xã Lê Lợi, Hưng Yên"
+      address: "Xã Lê Lợi, Hưng Yên",
+      // Tư gia nhà gái — hiển thị trong box Địa điểm tổ chức (Page 3), dưới tư gia nhà trai
+      venue: {
+        name: "Tư Gia Nhà Gái",
+        address: "Thôn Cao Bạt Trung, xã Lê Lợi, Hưng Yên",
+        mapUrl: "https://maps.app.goo.gl/ZoDWgRerq1bDk1K58"
+      }
     },
     announcementText: "Sau hành trình yêu thương và đồng hành, chúng mình hạnh phúc báo tin ngày về chung một nhà",
     ceremonyTime: "Lễ Thành Hôn sẽ được cử hành vào lúc 9:30 ngày 28 tháng 11 năm 2026",
@@ -76,6 +82,18 @@ window.WEDDING_CONFIG = {
     message: "Sự hiện diện của Quý khách là niềm vinh hạnh lớn lao trong ngày hạnh phúc của chúng mình."
   },
 
+  // PAGE 5: CHÚC MỪNG HẠNH PHÚC — QR MỪNG CƯỚI (VietQR Techcombank)
+  gift: {
+    heading: "Gửi Trao",
+    headingEm: "Yêu Thương",
+    message: "Sự hiện diện và lời chúc của bạn đã là món quà quý giá nhất. Nếu ở xa chưa thể đến chung vui, bạn có thể gửi lời chúc mừng hạnh phúc tới chúng mình qua mã QR này.",
+    bankName: "Techcombank",
+    accountName: "", // Điền tên chủ tài khoản (VD: "TRAN DUC LONG") để hiển thị; để trống sẽ ẩn dòng này
+    accountNumber: "19036348800014",
+    qrImage: "assets/images/qr-code/qr-mung-cuoi.svg",
+    qrDownload: "assets/images/qr-code/qr-mung-cuoi.png"
+  },
+
   // NHẠC NỀN THIỆP CƯỚI (ĐÃ CẮT TỪ 2:28 ĐOẠN "DEAR LORD..." ĐẾN HẾT, CHỈ PHÁT 1 LẦN)
   music: {
     src: "assets/music/young-and-beautiful.m4a",
@@ -85,57 +103,12 @@ window.WEDDING_CONFIG = {
   },
 
   // LƯU BÚT CÁNH BƯỚM TRÊN BẢNG GỖ NGHỆ THUẬT
+  // Lời chúc được lưu vào Google Sheet qua Google Apps Script (xem google-apps-script/Code.gs).
+  // Dán URL Web App (dạng https://script.google.com/macros/s/.../exec) vào apiUrl.
+  // Để trống apiUrl: lời chúc chỉ lưu trên trình duyệt của khách (localStorage) — cô dâu chú rể KHÔNG xem được.
   wishes: {
-    headerTitle: "LƯU BÚT",
-    initialWishes: [
-      {
-        id: "w-1",
-        name: "Minh Anh & Hoàng Nam",
-        message: "Chúc Đức Long và Nguyễn Phương trăm năm hạnh phúc, luôn nắm chặt tay nhau đi qua mọi mùa nắng đẹp của cuộc đời!",
-        time: "Hôm nay"
-      },
-      {
-        id: "w-2",
-        name: "Gia đình chú Tuấn (Đan Phượng)",
-        message: "Chúc hai cháu khởi đầu một mái ấm tràn ngập tiếng cười, thuận vợ thuận chồng và sớm đón thiên thần nhỏ nhé.",
-        time: "Hôm nay"
-      },
-      {
-        id: "w-3",
-        name: "Hội bạn Đại học",
-        message: "Cuối cùng ngày này cũng tới! Chúc cô dâu chú rể mãi giữ được ánh mắt ngọt ngào như trong bộ ảnh cưới tuyệt đẹp này.",
-        time: "Hôm nay"
-      },
-      {
-        id: "w-4",
-        name: "Thu Hà (Hưng Yên)",
-        message: "Chúc Phương của tớ luôn là cô dâu hạnh phúc nhất. Chúc hai bạn một đời bình yên, dịu dàng và trọn vẹn bên nhau!",
-        time: "Hôm nay"
-      },
-      {
-        id: "w-5",
-        name: "Anh chị Khánh Linh",
-        message: "Trăm năm tình viên mãn, bạc đầu nghĩa phu thê. Chúc mừng hạnh phúc hai em Đức Long & Nguyễn Phương!",
-        time: "Hôm nay"
-      },
-      {
-        id: "w-6",
-        name: "Team Đồng Nghiệp",
-        message: "Chúc hai bạn xây dựng tổ ấm nhỏ luôn ấm áp như nắng sớm trong khu rừng cổ tích. Happy Wedding!",
-        time: "Hôm nay"
-      },
-      {
-        id: "w-7",
-        name: "Đức Huy",
-        message: "Chúc người anh em Đức Long và bà xã trăm năm hòa hợp, vạn sự hanh thông, hạnh phúc viên mãn!",
-        time: "Hôm nay"
-      },
-      {
-        id: "w-8",
-        name: "Gia đình bác Hòa",
-        message: "Mừng ngày vui của hai cháu! Chúc tổ ấm nhỏ luôn ngập tràn tiếng cười, bình an và thịnh vượng.",
-        time: "Hôm nay"
-      }
-    ]
+    headerTitle: "Lưu Bút",
+    headerTitleEm: "Cánh Bướm",
+    apiUrl: "https://script.google.com/macros/s/AKfycbx_Enmj-Ztn9tGkPwPSxzKXvJG8v8lVIcpm5awSTBg0G9_GXMs0bCfPtLwWTtYnyy5o/exec"
   }
 };

@@ -198,6 +198,7 @@
                 Tức ngày 20 tháng 10 năm Bính Ngọ
               </p>
             </div>
+
           </div>
         </div>
       </div>
@@ -259,6 +260,23 @@
                 <span>XEM BẢN ĐỒ CHỈ ĐƯỜNG</span>
                 <span class="arrow">→</span>
               </a>
+
+              <!-- Tư gia nhà gái: dùng chung box Địa điểm tổ chức -->
+              <div class="venue-card-divider" aria-hidden="true"></div>
+              <h3 class="venue-card-name" id="bride-venue-name">Tư Gia Nhà Gái</h3>
+              <p class="venue-card-address" id="bride-venue-address">
+                Thôn Cao Bạt Trung, xã Lê Lợi, Hưng Yên
+              </p>
+              <a
+                id="bride-venue-map-link"
+                href="https://maps.app.goo.gl/ZoDWgRerq1bDk1K58"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="editorial-map-link"
+              >
+                <span>XEM BẢN ĐỒ CHỈ ĐƯỜNG</span>
+                <span class="arrow">→</span>
+              </a>
             </div>
           </div>
         </div>
@@ -271,17 +289,19 @@
     <section class="mag-page page-editorial-spread page-wishes" id="page-wishes" aria-label="Lưu bút">
       <div class="spread-container wishes-showcase-container reveal-on-scroll">
         <!-- Header tối giản: Chỉ giữ đúng chữ "LƯU BÚT" căn giữa -->
-        <header class="spread-RunningHeader spread-RunningHeader--centered">
-          <span class="header-rule"></span>
-          <span id="wishes-header-title">LƯU BÚT</span>
-          <span class="header-rule"></span>
+        <header class="wishes-heading">
+          <span class="editorial-tag">GUESTBOOK</span>
+          <h2 class="wishes-heading-title">
+            <span id="wishes-header-title">Lưu Bút</span>
+            <em id="wishes-header-title-em">Cánh Bướm</em>
+          </h2>
         </header>
 
         <!-- Thanh trạng thái đưa phần hiển thị cánh bướm đã đậu lên trước & nút nhỏ mở Dialog -->
         <div class="wishes-showcase-topbar">
           <div class="board-status-pill">
             <span class="status-wing-dot" aria-hidden="true"></span>
-            <span><strong id="wish-total-count">8</strong> CÁNH BƯỚM ĐÃ ĐẬU</span>
+            <span><strong id="wish-total-count">0</strong> CÁNH BƯỚM ĐÃ ĐẬU</span>
           </div>
 
           <div class="board-actions">
@@ -376,6 +396,11 @@
           <!-- Sân khấu nơi những chú bướm 3D nghệ thuật bay vào và đậu trên mặt gỗ -->
           <div class="butterfly-stage" id="butterfly-stage" aria-live="polite"></div>
 
+          <!-- Trạng thái khi chưa có lưu bút / đang tải -->
+          <p class="board-empty-note" id="board-empty-note" hidden>
+            Hãy là người đầu tiên thả một cánh bướm lưu bút lên bảng gỗ ✦
+          </p>
+
           <!-- Thẻ Lưu Bút Giấy Mỹ Thuật (Artisanal Herbarium Card) hiện ra khi hover / chạm vào chú bướm -->
           <aside class="wish-floating-card" id="wish-floating-card" aria-hidden="true">
             <button type="button" class="wish-card-close" id="wish-card-close" aria-label="Đóng lưu bút">×</button>
@@ -444,6 +469,8 @@
               </div>
             </div>
 
+            <p class="wish-form-status" id="wish-form-status" role="status" hidden></p>
+
             <div class="wish-compose-actions">
               <button type="submit" class="wish-submit-btn" id="wish-submit-btn">
                 <span aria-hidden="true">✦</span>
@@ -470,7 +497,120 @@
     </section>
 
     <!-- ======================================================================
-         PAGE 5: TRANG KẾT — ẢNH QA_06511 NỀN ĐEN TRẮNG (MONOCHROME)
+         PAGE 5: CHÚC MỪNG HẠNH PHÚC — MÃ QR MỪNG CƯỚI GIỮA VÒNG HOA LÁ
+         ====================================================================== -->
+    <section class="mag-page page-editorial-spread page-gift" id="page-gift" aria-label="Chúc mừng hạnh phúc">
+      <div class="spread-watermark" aria-hidden="true">♡</div>
+
+      <!-- Nhánh lá & hoa dùng chung cho các góc khung QR -->
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="gift-leaf-grad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#9fb8a2" />
+            <stop offset="100%" stop-color="#4f7a5c" />
+          </linearGradient>
+          <symbol id="gift-leaf" viewBox="0 0 40 16">
+            <path d="M0 8 C9 -1 28 -1 40 8 C28 17 9 17 0 8 Z" fill="url(#gift-leaf-grad)" />
+            <path d="M2 8 L36 8" stroke="#e9efe6" stroke-opacity="0.45" stroke-width="0.8" fill="none" />
+          </symbol>
+          <symbol id="gift-flower" viewBox="-12 -12 24 24">
+            <g fill="#fbf7ec" stroke="#dfc092" stroke-width="0.5">
+              <ellipse cx="0" cy="-6" rx="3.6" ry="5.6" />
+              <ellipse cx="0" cy="-6" rx="3.6" ry="5.6" transform="rotate(72)" />
+              <ellipse cx="0" cy="-6" rx="3.6" ry="5.6" transform="rotate(144)" />
+              <ellipse cx="0" cy="-6" rx="3.6" ry="5.6" transform="rotate(216)" />
+              <ellipse cx="0" cy="-6" rx="3.6" ry="5.6" transform="rotate(288)" />
+            </g>
+            <circle r="2.4" fill="#dfc092" />
+          </symbol>
+          <symbol id="gift-sprig" viewBox="0 0 200 200">
+            <path d="M8 192 C52 160 84 128 112 92 C134 62 158 38 192 14" fill="none" stroke="#6f8f76" stroke-width="2" stroke-linecap="round" />
+            <path d="M70 140 C86 146 104 146 118 138" fill="none" stroke="#6f8f76" stroke-width="1.4" stroke-linecap="round" />
+            <use href="#gift-leaf" width="40" height="16" transform="translate(30 168) rotate(-80)" />
+            <use href="#gift-leaf" width="40" height="16" transform="translate(40 166) rotate(-8)" />
+            <use href="#gift-leaf" width="44" height="18" transform="translate(66 138) rotate(-95)" />
+            <use href="#gift-leaf" width="44" height="18" transform="translate(82 126) rotate(-20)" />
+            <use href="#gift-leaf" width="40" height="16" transform="translate(104 100) rotate(-110)" />
+            <use href="#gift-leaf" width="40" height="16" transform="translate(118 84) rotate(-30)" />
+            <use href="#gift-leaf" width="36" height="14" transform="translate(142 58) rotate(-118)" />
+            <use href="#gift-leaf" width="36" height="14" transform="translate(156 46) rotate(-38)" />
+            <use href="#gift-leaf" width="30" height="12" transform="translate(176 26) rotate(-60)" />
+            <use href="#gift-flower" x="104" y="128" width="30" height="30" />
+            <use href="#gift-flower" x="120" y="122" width="22" height="22" />
+            <use href="#gift-flower" x="58" y="150" width="24" height="24" />
+            <use href="#gift-flower" x="146" y="64" width="20" height="20" />
+            <use href="#gift-leaf" width="34" height="14" transform="translate(92 150) rotate(30)" />
+            <use href="#gift-leaf" width="30" height="12" transform="translate(52 176) rotate(40)" />
+            <use href="#gift-flower" x="80" y="104" width="18" height="18" />
+            <use href="#gift-flower" x="160" y="22" width="16" height="16" />
+            <use href="#gift-flower" x="28" y="160" width="16" height="16" />
+            <circle cx="132" cy="112" r="2.2" fill="#dfc092" />
+            <circle cx="92" cy="156" r="1.8" fill="#dfc092" />
+            <circle cx="170" cy="54" r="1.6" fill="#dfc092" />
+          </symbol>
+        </defs>
+      </svg>
+
+      <div class="spread-container reveal-on-scroll">
+        <div class="gift-layout">
+          <div class="gift-copy">
+            <span class="editorial-tag">WEDDING GIFT</span>
+            <h2 class="spread-display-title">
+              <span id="gift-heading">Gửi Trao</span><br /><em id="gift-heading-em">Yêu Thương</em>
+            </h2>
+            <p class="spread-lead-quote" id="gift-message">
+              Sự hiện diện và lời chúc của bạn đã là món quà quý giá nhất. Nếu ở xa chưa thể đến chung vui, bạn có thể gửi lời chúc mừng hạnh phúc tới chúng mình qua mã QR này.
+            </p>
+
+            <dl class="gift-bank-info">
+              <div class="gift-bank-row">
+                <dt>NGÂN HÀNG</dt>
+                <dd id="gift-bank-name">Techcombank</dd>
+              </div>
+              <div class="gift-bank-row" id="gift-account-name-row" hidden>
+                <dt>CHỦ TÀI KHOẢN</dt>
+                <dd id="gift-account-name"></dd>
+              </div>
+              <div class="gift-bank-row">
+                <dt>SỐ TÀI KHOẢN</dt>
+                <dd>
+                  <span id="gift-account-number">19036348800014</span>
+                  <button type="button" class="gift-copy-btn" id="gift-copy-btn">Sao chép</button>
+                </dd>
+              </div>
+            </dl>
+          </div>
+
+          <figure class="gift-qr-figure">
+            <div class="gift-qr-frame">
+              <svg class="gift-sprig gift-sprig--tl" viewBox="0 0 200 200" aria-hidden="true"><use href="#gift-sprig" /></svg>
+              <svg class="gift-sprig gift-sprig--br" viewBox="0 0 200 200" aria-hidden="true"><use href="#gift-sprig" /></svg>
+              <svg class="gift-sprig gift-sprig--tr" viewBox="0 0 200 200" aria-hidden="true"><use href="#gift-sprig" /></svg>
+              <svg class="gift-sprig gift-sprig--bl" viewBox="0 0 200 200" aria-hidden="true"><use href="#gift-sprig" /></svg>
+
+              <div class="gift-qr-plate">
+                <img
+                  id="gift-qr-img"
+                  src="assets/images/qr-code/qr-mung-cuoi.svg"
+                  alt="Mã QR mừng cưới Đức Long &amp; Nguyễn Phương"
+                  width="450"
+                  height="450"
+                  loading="lazy"
+                />
+              </div>
+              <span class="gift-qr-caption">Đức Long <em>&amp;</em> Nguyễn Phương</span>
+            </div>
+            <figcaption class="gift-qr-hint">
+              Mở ứng dụng ngân hàng và quét mã
+              <a id="gift-qr-download" href="assets/images/qr-code/qr-mung-cuoi.png" download="QR-mung-cuoi-Duc-Long-Nguyen-Phuong.png">Lưu ảnh QR</a>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         PAGE 6: TRANG KẾT — ẢNH QA_06511 NỀN ĐEN TRẮNG (MONOCHROME)
          ====================================================================== -->
     <section class="mag-page page-finale-bw" id="page-4" aria-label="Lời cảm ơn">
       <div class="finale-bw-stage">

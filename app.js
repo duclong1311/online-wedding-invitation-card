@@ -57,6 +57,14 @@
       setTxt("bride-address", couple.bride.address);
       setTxt("ceremony-time-note", couple.ceremonyTime);
       setTxt("ceremony-lunar-note", couple.ceremonyLunar);
+
+      const brideVenue = couple.bride.venue;
+      if (brideVenue) {
+        setTxt("bride-venue-name", brideVenue.name);
+        setTxt("bride-venue-address", brideVenue.address);
+        const brideMap = document.getElementById("bride-venue-map-link");
+        if (brideMap && brideVenue.mapUrl) brideMap.href = brideVenue.mapUrl;
+      }
     }
 
     // Page 3: Bữa cơm thân mật (26.11.2026 - 17:30 tại Tư gia nhà trai)
@@ -84,10 +92,31 @@
     // Page 4: Lưu Bút
     if (CFG.wishes) {
       const w = CFG.wishes;
-      setTxt("wishes-header-title", w.headerTitle || "LƯU BÚT");
+      setTxt("wishes-header-title", w.headerTitle || "Lưu Bút");
+      setTxt("wishes-header-title-em", w.headerTitleEm || "Cánh Bướm");
     }
 
-    // Page 5: Bìa sau QA_06511 Đen Trắng
+    // Page 5: Chúc mừng hạnh phúc — QR mừng cưới
+    const gift = CFG.gift;
+    if (gift) {
+      setTxt("gift-heading", gift.heading);
+      setTxt("gift-heading-em", gift.headingEm);
+      setTxt("gift-message", gift.message);
+      setTxt("gift-bank-name", gift.bankName);
+      setTxt("gift-account-number", gift.accountNumber);
+
+      const nameRow = document.getElementById("gift-account-name-row");
+      if (nameRow) {
+        nameRow.hidden = !gift.accountName;
+        setTxt("gift-account-name", gift.accountName || "");
+      }
+      const qrImg = document.getElementById("gift-qr-img");
+      if (qrImg && gift.qrImage) qrImg.src = gift.qrImage;
+      const qrDl = document.getElementById("gift-qr-download");
+      if (qrDl && gift.qrDownload) qrDl.href = gift.qrDownload;
+    }
+
+    // Page 6: Bìa sau QA_06511 Đen Trắng
     if (ending) {
       setTxt("finale-top-title", ending.topTitle);
       setTxt("finale-message", ending.message);
@@ -353,26 +382,48 @@
       { x: 35, y: 23, angle: 9,   fx: -170, fy: -210, frot: 21, scale: 0.93 }
     ];
 
-    function loadWishes() {
-      const initial = (CFG.wishes && Array.isArray(CFG.wishes.initialWishes))
-        ? CFG.wishes.initialWishes.map((item, idx) => ({
-            ...item,
-            species: item.species || pickRandomSpecies(idx)
-          }))
-        : [];
+    // Nguồn dữ liệu lưu bút:
+    //  - Có CFG.wishes.apiUrl  -> Google Sheet (qua Apps Script) — mọi khách cùng thấy, cô dâu chú rể xem trong Sheet
+    //  - Không có apiUrl       -> chỉ lưu trên trình duyệt của khách (localStorage), dùng khi chạy thử
+    const API_URL = ((CFG.wishes && CFG.wishes.apiUrl) || "").trim();
+    const emptyNote = document.getElementById("board-empty-note");
+    const formStatus = document.getElementById("wish-form-status");
+    const submitBtn = document.getElementById("wish-submit-btn");
+
+    function formatWishTime(wish) {
+      if (!wish.createdAt) return wish.time || "";
+      const d = new Date(wish.createdAt);
+      if (isNaN(d.getTime())) return wish.time || "";
+      const diffMin = (Date.now() - d.getTime()) / 60000;
+      if (diffMin < 2) return "Vừa xong";
+      if (diffMin < 60) return `${Math.floor(diffMin)} phút trước`;
+      if (diffMin < 60 * 24) return `${Math.floor(diffMin / 60)} giờ trước`;
+      const pad = (n) => String(n).padStart(2, "0");
+      return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`;
+    }
+
+    function normalizeWish(item, idx) {
+      return {
+        id: String(item.id || `wish-${idx}`),
+        name: String(item.name || "").slice(0, 55),
+        message: String(item.message || "").slice(0, 220),
+        species: SPECIES_PALETTES[item.species] ? item.species : pickRandomSpecies(idx),
+        createdAt: item.createdAt || null,
+        time: item.time || ""
+      };
+    }
+
+    function loadLocalWishes() {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
         const saved = raw ? JSON.parse(raw) : [];
-        if (Array.isArray(saved) && saved.length > 0) {
-          return [...saved, ...initial];
-        }
+        return Array.isArray(saved) ? saved.map(normalizeWish) : [];
       } catch (e) {
-        // Bỏ qua nếu trình duyệt chặn localStorage
+        return [];
       }
-      return [...initial];
     }
 
-    function saveCustomWish(newWish) {
+    function saveLocalWish(newWish) {
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
         const saved = raw ? JSON.parse(raw) : [];
@@ -383,7 +434,46 @@
       }
     }
 
-    let allWishes = loadWishes();
+    async function fetchRemoteWishes() {
+      const res = await fetch(`${API_URL}?t=${Date.now()}`, { method: "GET" });
+      const data = await res.json();
+      if (!data || !data.ok || !Array.isArray(data.wishes)) throw new Error("Bad response");
+      return data.wishes.map(normalizeWish);
+    }
+
+    async function postRemoteWish(payload) {
+      // text/plain để tránh CORS preflight (Apps Script không hỗ trợ OPTIONS)
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (!data || !data.ok || !data.wish) throw new Error((data && data.error) || "Bad response");
+      return normalizeWish(data.wish, 0);
+    }
+
+    function updateEmptyNote(text) {
+      if (!emptyNote) return;
+      if (text) {
+        emptyNote.textContent = text;
+        emptyNote.hidden = false;
+      } else if (allWishes.length === 0) {
+        emptyNote.textContent = "Hãy là người đầu tiên thả một cánh bướm lưu bút lên bảng gỗ ✦";
+        emptyNote.hidden = false;
+      } else {
+        emptyNote.hidden = true;
+      }
+    }
+
+    function setFormStatus(text, isError) {
+      if (!formStatus) return;
+      formStatus.textContent = text || "";
+      formStatus.hidden = !text;
+      formStatus.classList.toggle("is-error", !!isError);
+    }
+
+    let allWishes = API_URL ? [] : loadLocalWishes();
     let flightTimer = null;
 
     // Thiết kế SVG Cánh Bướm Đuôi Én Nghệ Thuật (Ornate Swallowtail Botanical Engraving)
@@ -425,7 +515,7 @@
         cardEmblem.style.boxShadow = `0 0 12px ${pal.glow}`;
       }
       if (cardSender) cardSender.textContent = wish.name;
-      if (cardTime) cardTime.textContent = wish.time || "Vừa xong";
+      if (cardTime) cardTime.textContent = formatWishTime(wish);
       if (cardBody) cardBody.textContent = `“${wish.message}”`;
 
       floatingCard.classList.add("is-open");
@@ -472,6 +562,7 @@
       if (totalCountEl) {
         totalCountEl.textContent = String(allWishes.length);
       }
+      updateEmptyNote();
 
       const visibleWishes = allWishes.slice(0, MAX_BOARD_BUTTERFLIES);
 
@@ -545,17 +636,8 @@
     }
 
     // Thả một chú bướm màu ngẫu nhiên bay vào đậu lên bảng gỗ ngay sau khi đóng Dialog
-    function releaseNewButterflyToBoard(senderName, messageText) {
-      const newWish = {
-        id: `wish-${Date.now()}`,
-        name: senderName,
-        species: pickRandomSpecies(),
-        message: messageText,
-        time: "Vừa xong"
-      };
-
-      allWishes.unshift(newWish);
-      saveCustomWish(newWish);
+    function releaseNewButterflyToBoard(newWish) {
+      allWishes = [newWish, ...allWishes.filter((w) => w.id !== newWish.id)];
 
       board.classList.add("is-flight-active");
       renderBoardButterflies(newWish.id);
@@ -586,7 +668,7 @@
 
         const time = document.createElement("span");
         time.className = "modal-wish-time";
-        time.textContent = w.time || "Hôm nay";
+        time.textContent = formatWishTime(w);
 
         const msg = document.createElement("p");
         msg.className = "modal-wish-msg";
@@ -602,6 +684,20 @@
 
     // Khởi tạo đàn bướm lần đầu
     renderBoardButterflies();
+
+    // Tải lưu bút thật từ Google Sheet
+    if (API_URL) {
+      updateEmptyNote("Đang tải lưu bút…");
+      fetchRemoteWishes()
+        .then((list) => {
+          allWishes = list;
+          renderBoardButterflies();
+          if (hasTriggeredScrollFlight) triggerFlightAnimation();
+        })
+        .catch(() => {
+          updateEmptyNote("Chưa tải được lưu bút, vui lòng thử lại sau ✦");
+        });
+    }
 
     // Quan sát khi người dùng scroll tới tấm bảng gỗ -> đàn bướm bay vào đậu
     let hasTriggeredScrollFlight = false;
@@ -645,21 +741,54 @@
       }, 60);
     }
 
-    function closeComposeDialog(shouldReleaseIfFilled) {
-      if (!composeBackdrop) return;
+    let isSubmitting = false;
+
+    function closeComposeDialog() {
+      if (!composeBackdrop || isSubmitting) return;
+      composeBackdrop.hidden = true;
+      setFormStatus("");
+    }
+
+    async function submitWish() {
+      if (isSubmitting) return;
       const senderName = (nameInput ? nameInput.value : "").trim();
       const messageText = (msgInput ? msgInput.value : "").trim();
+      if (!senderName || !messageText) return;
 
-      composeBackdrop.hidden = true;
+      const draft = {
+        id: `wish-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+        name: senderName.slice(0, 55),
+        message: messageText.slice(0, 220),
+        species: pickRandomSpecies(),
+        createdAt: new Date().toISOString()
+      };
 
-      if (shouldReleaseIfFilled && senderName && messageText) {
-        if (form) form.reset();
-        if (charCount) charCount.textContent = "0 / 220";
-        // Ngay sau khi đóng Dialog, chú bướm mới bay vào và đậu lên bảng gỗ
-        setTimeout(() => {
-          releaseNewButterflyToBoard(senderName, messageText);
-        }, 160);
+      let savedWish = draft;
+      if (API_URL) {
+        isSubmitting = true;
+        if (submitBtn) submitBtn.disabled = true;
+        setFormStatus("Đang gửi lưu bút…");
+        try {
+          savedWish = await postRemoteWish(draft);
+        } catch (err) {
+          isSubmitting = false;
+          if (submitBtn) submitBtn.disabled = false;
+          setFormStatus("Gửi chưa thành công, bạn thử lại giúp chúng mình nhé.", true);
+          return;
+        }
+        isSubmitting = false;
+        if (submitBtn) submitBtn.disabled = false;
+      } else {
+        saveLocalWish(draft);
       }
+
+      if (form) form.reset();
+      if (charCount) charCount.textContent = "0 / 220";
+      closeComposeDialog();
+      // Ngay sau khi đóng Dialog, chú bướm mới bay vào và đậu lên bảng gỗ
+      setTimeout(() => {
+        releaseNewButterflyToBoard(savedWish);
+      }, 160);
     }
 
     if (openComposeBtn) {
@@ -667,15 +796,13 @@
     }
 
     if (closeComposeBtn) {
-      closeComposeBtn.addEventListener("click", () => {
-        closeComposeDialog(true);
-      });
+      closeComposeBtn.addEventListener("click", closeComposeDialog);
     }
 
     if (composeBackdrop) {
       composeBackdrop.addEventListener("click", (e) => {
         if (e.target === composeBackdrop) {
-          closeComposeDialog(true);
+          closeComposeDialog();
         }
       });
     }
@@ -700,7 +827,7 @@
     if (form) {
       form.addEventListener("submit", (e) => {
         e.preventDefault();
-        closeComposeDialog(true);
+        submitWish();
       });
     }
 
@@ -728,6 +855,45 @@
   }
 
   // --------------------------------------------------------------------------
+  // 6. SAO CHÉP SỐ TÀI KHOẢN MỪNG CƯỚI
+  // --------------------------------------------------------------------------
+  function setupGiftCopy() {
+    const btn = document.getElementById("gift-copy-btn");
+    const numEl = document.getElementById("gift-account-number");
+    if (!btn || !numEl) return;
+
+    function fallbackCopy(text) {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); } catch (e) { /* bỏ qua */ }
+      document.body.removeChild(ta);
+    }
+
+    btn.addEventListener("click", () => {
+      const text = numEl.textContent.trim();
+      const done = () => {
+        btn.textContent = "Đã chép";
+        btn.classList.add("is-copied");
+        setTimeout(() => {
+          btn.textContent = "Sao chép";
+          btn.classList.remove("is-copied");
+        }, 1800);
+      };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(done, () => { fallbackCopy(text); done(); });
+      } else {
+        fallbackCopy(text);
+        done();
+      }
+    });
+  }
+
+  // --------------------------------------------------------------------------
   // KHỞI CHẠY
   // --------------------------------------------------------------------------
   function init() {
@@ -736,6 +902,7 @@
     setupBotanicalCanvas();
     setupBackgroundMusic();
     setupButterflyWishes();
+    setupGiftCopy();
   }
 
   if (document.readyState === "loading") {
