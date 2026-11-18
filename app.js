@@ -58,6 +58,20 @@
       setTxt("ceremony-time-note", couple.ceremonyTime);
       setTxt("ceremony-lunar-note", couple.ceremonyLunar);
 
+      const scheduleEl = document.getElementById("ceremony-schedule");
+      if (scheduleEl && Array.isArray(couple.ceremonySchedule)) {
+        scheduleEl.innerHTML = "";
+        couple.ceremonySchedule.forEach((item) => {
+          const li = document.createElement("li");
+          const name = document.createElement("span");
+          name.textContent = item.name;
+          const time = document.createElement("strong");
+          time.textContent = item.time;
+          li.append(name, time);
+          scheduleEl.appendChild(li);
+        });
+      }
+
       const brideVenue = couple.bride.venue;
       if (brideVenue) {
         setTxt("bride-venue-name", brideVenue.name);

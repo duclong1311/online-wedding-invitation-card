@@ -686,6 +686,41 @@ img {
   color: var(--bot-sage-muted);
 }
 
+/* Lịch các nghi lễ: Lễ Vu Quy / Lễ Thành Hôn */
+.ceremony-schedule {
+  list-style: none;
+  margin-top: 0.9rem;
+  border-top: 1px solid var(--bot-rule);
+}
+
+.ceremony-schedule li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px dashed rgba(223, 192, 146, 0.18);
+}
+
+.ceremony-schedule li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.ceremony-schedule span {
+  font-family: var(--font-vn-serif);
+  font-size: 1.15rem;
+  color: var(--bot-ivory);
+}
+
+.ceremony-schedule strong {
+  font-family: var(--font-masthead);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--bot-gold);
+  font-variant-numeric: tabular-nums;
+}
+
 .reception-editorial-layout {
   display: grid;
   grid-template-columns: 0.95fr 1.05fr;

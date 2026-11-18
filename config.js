@@ -21,7 +21,7 @@ window.WEDDING_CONFIG = {
 
     bottomLeftLabel: "THE WEDDING OF",
     groomDisplay: "Đức Long",
-    brideDisplay: "Nguyễn Phương",
+    brideDisplay: "Phương Chan",
     heroDay: "28",
     heroMonthShortEn: "NOV",
     heroYear: "2026",
@@ -39,10 +39,10 @@ window.WEDDING_CONFIG = {
       address: "Xã Đan Phượng, Hà Nội"
     },
     bride: {
-      shortName: "Nguyễn Phương",
+      shortName: "Phương Chan",
       fullName: "Nguyễn Thị Phương",
       roleLabel: "CÔ DÂU",
-      father: "Ông Nguyễn Hữu Chiến",
+      father: "Ông Nguyễn Hữu Quân",
       mother: "Bà Trần Thị Tuyết",
       address: "Xã Lê Lợi, Hưng Yên",
       // Tư gia nhà gái — hiển thị trong box Địa điểm tổ chức (Page 3), dưới tư gia nhà trai
@@ -53,7 +53,11 @@ window.WEDDING_CONFIG = {
       }
     },
     announcementText: "Sau hành trình yêu thương và đồng hành, chúng mình hạnh phúc báo tin ngày về chung một nhà",
-    ceremonyTime: "Lễ Thành Hôn sẽ được cử hành vào lúc 9:30 ngày 28 tháng 11 năm 2026",
+    ceremonyTime: "Các nghi lễ sẽ được cử hành vào ngày 28 tháng 11 năm 2026",
+    ceremonySchedule: [
+      { name: "Lễ Vu Quy", time: "7:30" },
+      { name: "Lễ Thành Hôn", time: "11:30" }
+    ],
     ceremonyLunar: "Tức ngày 20 tháng 10 năm Bính Ngọ"
   },
 
